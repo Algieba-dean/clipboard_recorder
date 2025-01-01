@@ -1,0 +1,27 @@
+{
+    "general": {
+        "check_interval": 1.0,
+        "max_log_files": 30,
+        "base_dir": "logs",
+        "images_dir": "images"
+    },
+    "logging": {
+        "save_image_file": true,
+        "save_image_base64": true,
+        "max_entries_per_file": 1000,
+        "indent_json": true
+    },
+    "content_types": {
+        "enable_text": true,
+        "enable_image": true,
+        "enable_files": true,
+        "max_text_length": 1000000,
+        "max_image_size": 10485760
+    },
+    "display": {
+        "show_content_preview": true,
+        "max_preview_length": 200,
+        "show_timestamps": true,
+        "console_width": 80
+    }
+} 

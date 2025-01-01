@@ -1,0 +1,37 @@
+# 自动检测文本文件并进行规范化
+* text=auto
+
+# Python 源文件使用 LF
+*.py text eol=lf
+*.pyw text eol=lf
+*.pyx text eol=lf
+*.pxd text eol=lf
+
+# 批处理文件使用 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Shell 脚本使用 LF
+*.sh text eol=lf
+Makefile text eol=lf
+
+# 文档文件使用 LF
+*.rst text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+
+# 配置文件使用 LF
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+
+# 二进制文件不进行转换
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.pdf binary 
