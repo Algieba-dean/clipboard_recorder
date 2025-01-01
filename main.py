@@ -1,23 +1,33 @@
 """主程序入口"""
-import os
 import sys
+from pathlib import Path
+from typing import NoReturn
 
-# 添加项目根目录到 Python 路径
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir not in sys.path:
-    sys.path.insert(0, current_dir)
+def setup_python_path() -> None:
+    """配置 Python 路径"""
+    # 添加项目根目录到 Python 路径
+    current_dir = Path(__file__).parent.absolute()
+    if str(current_dir) not in sys.path:
+        sys.path.insert(0, str(current_dir))
 
-if getattr(sys, 'frozen', False):
-    # 如果是打包后的可执行文件
-    bundle_dir = sys._MEIPASS
-    sys.path.insert(0, os.path.join(bundle_dir, 'src'))
+    # 如果是打包后的可执行文件,添加额外路径
+    if getattr(sys, 'frozen', False):
+        bundle_dir = Path(sys._MEIPASS)
+        sys.path.insert(0, str(bundle_dir / 'src'))
 
-from src.monitor import ClipboardMonitor
-
-def main():
-    """主程序入口函数"""
+def main() -> NoReturn:
+    """
+    主程序入口函数
+    启动剪贴板监控器
+    """
+    from src.monitor import ClipboardMonitor
+    
+    setup_python_path()
     monitor = ClipboardMonitor()
     monitor.run()
 
 if __name__ == "__main__":
-    main() 
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(0)
