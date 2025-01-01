@@ -18,6 +18,7 @@ from .models import ClipboardContent
 from .config import Config
 from .logger import ClipboardLogger
 
+
 class ClipboardMonitor:
     """程序的核心类，负责监控和处理剪贴板变化"""
     def __init__(self):
@@ -231,3 +232,7 @@ class ClipboardMonitor:
                 time.sleep(check_interval)
         except KeyboardInterrupt:
             print(Messages.Info.MONITOR_STOP) 
+
+if __name__ == '__main__':
+    monitor = ClipboardMonitor()
+    monitor.run()

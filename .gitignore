@@ -47,6 +47,15 @@ images/
 *.json
 !config.json
 
+# PyInstaller
+build/
+dist/
+*.manifest
+*.spec
+*.pyz
+*.pyw
+*.exe
+
 # Windows
 Thumbs.db
 ehthumbs.db
