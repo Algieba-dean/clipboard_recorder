@@ -18,7 +18,7 @@ class Config:
 
     Attributes:
         config_file (str): 配置文件的路径
-        config (Dict): 当前生效的配置数据
+        _settings (Dict): 当前生效的配置数据
     """
 
     def __init__(self, config_file: str = Paths.DEFAULT_CONFIG_FILE):
@@ -28,7 +28,7 @@ class Config:
             config_file (str, optional): 配置文件路径。默认为constants.Paths.DEFAULT_CONFIG_FILE
         """
         self.config_file = config_file
-        self.config = self._load_config()
+        self._settings = self._load_config()
 
     def _load_config(self) -> Dict[str, Any]:
         """加载配置文件。
@@ -79,4 +79,4 @@ class Config:
         Returns:
             Any: 配置值，如果未找到则返回默认配置中的值
         """
-        return self.config.get(section, {}).get(key, DefaultConfig.DEFAULT_CONFIG[section][key]) 
+        return self._settings.get(section, {}).get(key, DefaultConfig.DEFAULT_CONFIG[section][key]) 
