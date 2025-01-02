@@ -68,8 +68,10 @@ class ClipboardMonitor:
     def _get_clipboard_formats(self) -> Dict[str, int]:
         """获取剪贴板格式信息"""
         formats = {}
+        clipboard_opened = False
         try:
             win32clipboard.OpenClipboard()
+            clipboard_opened = True
             format_id = 0
             while format_id := win32clipboard.EnumClipboardFormats(format_id):
                 format_name = self._get_clipboard_format_name(format_id)
@@ -77,10 +79,11 @@ class ClipboardMonitor:
         except win32clipboard.error:
             pass
         finally:
-            try:
-                win32clipboard.CloseClipboard()
-            except win32clipboard.error:
-                pass
+            if clipboard_opened:
+                try:
+                    win32clipboard.CloseClipboard()
+                except win32clipboard.error:
+                    pass
         return formats
 
     def _read_image_content(self, content: ClipboardContent) -> Optional[ClipboardContent]:
@@ -144,8 +147,10 @@ class ClipboardMonitor:
         if not self._config.get(ConfigKeys.ContentTypes.SECTION, ConfigKeys.ContentTypes.ENABLE_FILES):
             return None
             
+        clipboard_opened = False
         try:
             win32clipboard.OpenClipboard()
+            clipboard_opened = True
             if win32clipboard.IsClipboardFormatAvailable(win32con.CF_HDROP):
                 content.data[JsonKeys.FILE_PATHS] = win32clipboard.GetClipboardData(win32con.CF_HDROP)
                 content.content_type = ContentType.FILES.value
@@ -153,10 +158,11 @@ class ClipboardMonitor:
         except Exception as e:
             print(Messages.Error.GET_CLIPBOARD_FILES_ERROR.format(str(e)))
         finally:
-            try:
-                win32clipboard.CloseClipboard()
-            except win32clipboard.error:
-                pass
+            if clipboard_opened:
+                try:
+                    win32clipboard.CloseClipboard()
+                except win32clipboard.error:
+                    pass
         return None
 
     def _read_clipboard(self) -> Optional[ClipboardContent]:
